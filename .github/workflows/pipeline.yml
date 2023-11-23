@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build Test Deploy
 
 on:
   push:
@@ -42,4 +42,15 @@ jobs:
           api-key: ${{ secrets.MY_RENDER_API_KEY }}
       - name: Wait 120 seconds
         run: sleep 120
-      
+
+  deploy-frontend:
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_STATIC_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+      # - name: Wait 120 seconds
+      #   run: sleep 120
