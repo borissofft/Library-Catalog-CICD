@@ -48,6 +48,9 @@ test('Verify "All Books" link is visible after user login', async ({ page }) => 
     await page.click('input[type="submit"]');
   
     await page.$('a[href="/catalog"]');
+
+    await page.waitForURL('http://localhost:3000/catalog');
+
     expect(page.url()).toBe('http://localhost:3000/catalog');
   });
   
@@ -171,8 +174,10 @@ test('Verify "All Books" link is visible after user login', async ({ page }) => 
     await page.fill('input[name="password"]', '123456');
     await page.click('input[type="submit"]');
   
+    await page.waitForURL('http://localhost:3000/catalog');
+
     const logoutLink = await page.$('a[href="javascript:void(0)"]');
-  
+
     const isLogoutLinkVisible = await logoutLink.isVisible();
   
     expect(isLogoutLinkVisible).toBe(true);
